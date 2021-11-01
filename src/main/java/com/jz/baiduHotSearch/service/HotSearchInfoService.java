@@ -8,6 +8,8 @@ import com.jz.baiduHotSearch.pojo.HotSearchInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +17,26 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 热搜service
+ */
 @Service
 public class HotSearchInfoService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HotSearchInfoService.class);
 
     @Autowired
     private HotSearchInfoMapper hotSearchInfoMapper;
 
+    /**
+     * 热点信息入库
+     * @throws IOException
+     */
     public void add() throws IOException {
         List<HotSearchInfo> hotSearchInfo = this.getHotSearchInfo();
         long branchId = System.currentTimeMillis();
         Date date = new Date();
         int count = hotSearchInfoMapper.insert(hotSearchInfo, branchId, date);
-        System.out.println(count);
+        LOGGER.info(String.valueOf(count));
     }
 
     /**
@@ -52,7 +62,7 @@ public class HotSearchInfoService {
         JSONArray content = cards01.getJSONArray("content");
         //5.将json对象转换为相应的对象
         List<HotSearchInfo> hotSearchInfoList = JSONObject.parseArray(content.toJSONString(), HotSearchInfo.class);
-        System.out.println("当前热搜有"+hotSearchInfoList.size()+"条！");
+        LOGGER.info("当前热搜有"+hotSearchInfoList.size()+"条！");
         return hotSearchInfoList;
     }
 }

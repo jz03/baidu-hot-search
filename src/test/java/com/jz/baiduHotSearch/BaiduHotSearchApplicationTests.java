@@ -20,7 +20,7 @@ class BaiduHotSearchApplicationTests {
      */
     @Test
     void contextLoads() throws IOException {
-        hotSearchInfoService.add();
+        hotSearchInfoService.recordHotSearchInfo();
     }
 
 }

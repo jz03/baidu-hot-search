@@ -9,4 +9,26 @@
             (#{branchId}, #{item.img}, #{item.hotScore}, #{item.query},#{item.index}, #{item.url}, #{item.word}, #{item.desc},#{date})
         </foreach>
     </insert>
+
+    <insert id="insertHotBranch" useGeneratedKeys="true" keyProperty="hotBranchList.id">
+        insert into hot_branch(branch_id,hot_info_id,hot_score,`index`,create_date) values
+        <foreach item="item" collection="hotBranchList" separator=",">
+            (#{branchId}, #{item.hotInfoId}, #{item.hotScore}, #{item.index}, #{date})
+        </foreach>
+    </insert>
+
+    <insert id="insertHotInfo" useGeneratedKeys="true" keyProperty="hotInfoList.id">
+        insert into hot_info(img,query,url,word,`desc`,create_date) values
+        <foreach item="item" collection="hotInfoList" separator=",">
+            (#{item.img}, #{item.query},#{item.url},  #{item.word}, #{item.desc},#{date})
+        </foreach>
+    </insert>
+
+    <select id="findHotInfo" resultType="com.jz.baiduHotSearch.pojo.HotInfo">
+        select * from hot_info where query=#{query}
+    </select>
+
+    <update id="upateHotInfo">
+        update hot_info set `desc` = #{desc} where query=#{query}
+    </update>
 </mapper>

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jz.baiduHotSearch.mapper.HotSearchInfoMapper;
+import com.jz.baiduHotSearch.pojo.HotBranch;
+import com.jz.baiduHotSearch.pojo.HotInfo;
 import com.jz.baiduHotSearch.pojo.HotSearchInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 热搜service
@@ -37,6 +40,59 @@ public class HotSearchInfoService {
         Date date = new Date();
         int count = hotSearchInfoMapper.insert(hotSearchInfo, branchId, date);
         LOGGER.info(String.valueOf(count));
+    }
+
+    /**
+     * 记录热搜信息
+     */
+    public void recordHotSearchInfo() throws IOException {
+        List<HotSearchInfo> hotSearchInfoList = this.getHotSearchInfo();
+        //更新热点信息
+        List<HotInfo> hotInfoList = hotSearchInfoList.stream().map(item -> {
+            HotInfo hotInfoSearch = hotSearchInfoMapper.findHotInfo(item.getQuery());
+            //1.若不存在，添加
+            if(hotInfoSearch == null){
+                HotInfo hotInfo = new HotInfo();
+                hotInfo.setQuery(item.getQuery());
+                hotInfo.setImg(item.getImg());
+                hotInfo.setWord(item.getWord());
+                hotInfo.setDesc(item.getDesc());
+                hotInfo.setUrl(item.getUrl());
+                return hotInfo;
+            }else{
+                //2.若存在，描述不存在，更新描述
+                if(!item.getDesc().equals("")&&(hotInfoSearch.getDesc()==null||hotInfoSearch.getDesc().equals(""))){
+                    int count = hotSearchInfoMapper.upateHotInfo(item.getQuery(), item.getDesc());
+                    LOGGER.info("更新热点信息详情" + count);
+                }
+            }
+            return null;
+        }).collect(Collectors.toList());
+        //过滤掉空值
+        List<HotInfo> hotInfoListFilter = hotInfoList.stream().filter(item -> {
+            if (item == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }).collect(Collectors.toList());
+        //入库
+        if(hotInfoListFilter.size()>0){
+            int hotInfoCount = hotSearchInfoMapper.insertHotInfo(hotInfoListFilter, new Date());
+            LOGGER.info("热搜信息更新:" + hotInfoCount);
+        }
+        //保存批次信息
+        List<HotBranch> hotBranchList = hotSearchInfoList.stream().map(item -> {
+            HotBranch hotBranch = new HotBranch();
+            hotBranch.setHotInfoId(hotSearchInfoMapper.findHotInfo(item.getQuery()).getId());
+            hotBranch.setHotScore(item.getHotScore());
+            hotBranch.setIndex(item.getIndex());
+            return hotBranch;
+        }).collect(Collectors.toList());
+        if(hotBranchList.size()>0){
+            int branchCount = hotSearchInfoMapper.insertHotBranch(hotBranchList,System.currentTimeMillis(),new Date());
+            LOGGER.info("热搜批次更新:" + branchCount);
+        }
     }
 
     /**

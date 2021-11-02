@@ -22,7 +22,7 @@ public class ScheduleTask {
     @Scheduled(cron="0 0/30 * * * ?")
     public void hotSearch() throws IOException {
         LOGGER.info("定时任务开始**********************");
-        hotSearchInfoService.add();
+        hotSearchInfoService.recordHotSearchInfo();
         LOGGER.info("定时任务结束**********************");
     }
 }

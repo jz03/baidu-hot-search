@@ -2,6 +2,9 @@ package com.jz.baiduHotSearch.pojo;
 
 import java.util.Date;
 
+/**
+ * 上热搜的信息
+ */
 public class HotInfo {
     private int id;
     private String img;

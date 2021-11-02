@@ -2,6 +2,9 @@ package com.jz.baiduHotSearch.pojo;
 
 import java.util.Date;
 
+/**
+ * 每次抓取的信息
+ */
 public class HotBranch {
     private int id;
     private int branchId;

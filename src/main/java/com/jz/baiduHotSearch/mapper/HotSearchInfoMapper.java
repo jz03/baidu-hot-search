@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Component
@@ -32,4 +33,7 @@ public interface HotSearchInfoMapper {
 
     /**模糊查询热搜信息*/
     List<HotInfo> findHotInfoList(@Param("query") String query);
+
+    /**查询历史信息*/
+    List<Map<String,Object>> findHotInfoHistoryList(@Param("query") String query,@Param("id") String id);
 }

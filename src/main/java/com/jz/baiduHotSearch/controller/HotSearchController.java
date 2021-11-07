@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("hotSearch")
@@ -38,8 +39,20 @@ public class HotSearchController {
      * 查询热搜消息
      * @return
      */
-    @RequestMapping("/findHotInfoList0001")
+    @RequestMapping("/findHotInfoList")
     public List<HotInfo> findHotInfoList(@RequestParam("query") String query){
         return hotSearchInfoService.findHotInfoList(query);
+    }
+
+    /**
+     * 查询信息历史
+     * @param query
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findHotInfoHistoryList")
+    public List<Map<String,Object>> findHotInfoHistoryList(@RequestParam("query") String query,
+                                                           @RequestParam("id") String id){
+        return hotSearchInfoService.findHotInfoHistoryList(query,id);
     }
 }

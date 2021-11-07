@@ -38,8 +38,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">热搜信息 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
+            <li class="active"><a href="#">热搜信息 </a></li>
+            <li><a href="hotInfoHistory.html">热搜历史</a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
@@ -61,7 +61,7 @@
           <form class="form-inline">
             <div class="form-group">
               <label for="query">查询关键词</label>
-              <input type="text" class="form-control" id="query" v-model="query">
+              <input type="text" class="form-control" id="query" v-model="query" autocomplete="off">
             </div>
             <button type="button" class="btn btn-default" @click="findHotInfoList">查询</button>
           </form>

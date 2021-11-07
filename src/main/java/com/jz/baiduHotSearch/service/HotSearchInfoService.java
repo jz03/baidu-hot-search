@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +87,11 @@ public class HotSearchInfoService {
 
     public List<HotInfo> findHotInfoList(String query){
         List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
+        return hotInfoList;
+    }
+
+    public List<Map<String, Object>> findHotInfoHistoryList(String query,String id){
+        List<Map<String, Object>> hotInfoList = hotSearchInfoMapper.findHotInfoHistoryList(query,id);
         return hotInfoList;
     }
 

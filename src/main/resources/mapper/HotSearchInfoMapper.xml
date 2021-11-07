@@ -31,4 +31,32 @@
     <update id="upateHotInfo">
         update hot_info set `desc` = #{desc} where query=#{query}
     </update>
+
+    <select id="findHotInfoList" resultType="com.jz.baiduHotSearch.pojo.HotInfo">
+        select * from hot_info where 1=1
+        <if test="query != null and query != ''">
+            and query like concat("%",#{query},"%")
+        </if>
+        ORDER BY id DESC limit 100
+    </select>
+
+    <select id="findHotInfoHistoryList" resultType="map">
+        SELECT
+        concat(a.branch_id) as branchId,
+        `index` +1 as `index`,
+        hot_score as hotScore,
+        `query`,
+        a.create_date as createDate
+        FROM
+        hot_branch a, hot_info b
+        WHERE
+        a.hot_info_id = b.id
+        <if test="query != null and query != ''">
+            AND b.QUERY LIKE concat("%",#{query},"%")
+        </if>
+        <if test="id != null and id != ''">
+            AND b.id = #{id}
+        </if>
+        ORDER BY a.create_date DESC
+    </select>
 </mapper>

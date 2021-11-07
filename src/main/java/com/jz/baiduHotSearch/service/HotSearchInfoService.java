@@ -1,5 +1,6 @@
 package com.jz.baiduHotSearch.service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,18 +32,6 @@ public class HotSearchInfoService {
 
     @Autowired
     private HotSearchInfoMapper hotSearchInfoMapper;
-
-    /**
-     * 热点信息入库
-     * @throws IOException
-     */
-    public void add() throws IOException {
-        List<HotSearchInfo> hotSearchInfo = this.getHotSearchInfo();
-        long branchId = System.currentTimeMillis();
-        Date date = new Date();
-        int count = hotSearchInfoMapper.insert(hotSearchInfo, branchId, date);
-        LOGGER.info(String.valueOf(count));
-    }
 
     /**
      * 记录热搜信息
@@ -95,12 +86,27 @@ public class HotSearchInfoService {
         }
     }
 
+    public List<HotInfo> findHotInfoList(String query){
+        query = query.trim();
+        List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
+        return hotInfoList;
+    }
+
+    public List<Map<String, Object>> findHotInfoHistoryList(String query,String id){
+        query = query.trim();
+        if (StringUtils.isEmpty(query) && StringUtils.isEmpty(id)) {
+            return null;
+        }
+        List<Map<String, Object>> hotInfoList = hotSearchInfoMapper.findHotInfoHistoryList(query,id);
+        return hotInfoList;
+    }
+
     /**
      * 获取百度热点信息
      * @return
      * @throws IOException
      */
-    public List<HotSearchInfo> getHotSearchInfo() throws IOException {
+    private List<HotSearchInfo> getHotSearchInfo() throws IOException {
         //1.获取热搜页面
         String url = "https://top.baidu.com/board?tab=realtime";
         Document document = Jsoup.connect(url).get();

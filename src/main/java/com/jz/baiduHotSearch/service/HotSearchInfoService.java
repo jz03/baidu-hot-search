@@ -31,18 +31,6 @@ public class HotSearchInfoService {
     private HotSearchInfoMapper hotSearchInfoMapper;
 
     /**
-     * 热点信息入库
-     * @throws IOException
-     */
-    public void add() throws IOException {
-        List<HotSearchInfo> hotSearchInfo = this.getHotSearchInfo();
-        long branchId = System.currentTimeMillis();
-        Date date = new Date();
-        int count = hotSearchInfoMapper.insert(hotSearchInfo, branchId, date);
-        LOGGER.info(String.valueOf(count));
-    }
-
-    /**
      * 记录热搜信息
      */
     public void recordHotSearchInfo() throws IOException {
@@ -95,12 +83,17 @@ public class HotSearchInfoService {
         }
     }
 
+    public List<HotInfo> findHotInfoList(String query){
+        List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
+        return hotInfoList;
+    }
+
     /**
      * 获取百度热点信息
      * @return
      * @throws IOException
      */
-    public List<HotSearchInfo> getHotSearchInfo() throws IOException {
+    private List<HotSearchInfo> getHotSearchInfo() throws IOException {
         //1.获取热搜页面
         String url = "https://top.baidu.com/board?tab=realtime";
         Document document = Jsoup.connect(url).get();

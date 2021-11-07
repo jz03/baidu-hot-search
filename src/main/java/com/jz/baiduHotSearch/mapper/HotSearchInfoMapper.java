@@ -24,7 +24,12 @@ public interface HotSearchInfoMapper {
 
     int insertHotInfo(@Param("hotInfoList") List<HotInfo> hotInfoList,@Param("date") Date date);
 
+    /**准确查询热搜信息*/
     HotInfo findHotInfo(@Param("query") String query);
 
+    /**准确更新热搜信息*/
     int upateHotInfo(@Param("query") String query,@Param("desc") String desc);
+
+    /**模糊查询热搜信息*/
+    List<HotInfo> findHotInfoList(@Param("query") String query);
 }

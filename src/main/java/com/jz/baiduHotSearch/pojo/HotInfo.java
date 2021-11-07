@@ -1,18 +1,23 @@
 package com.jz.baiduHotSearch.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 上热搜的信息
  */
-public class HotInfo {
+public class HotInfo implements Serializable {
     private int id;
     private String img;
     private String query;
     private String url;
     private String word;
     private String desc;
-    private Date creatDate;
+
+//    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date createDate;
 
     public int getId() {
         return id;
@@ -62,11 +67,12 @@ public class HotInfo {
         this.desc = desc;
     }
 
-    public Date getCreatDate() {
-        return creatDate;
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatDate(Date creatDate) {
-        this.creatDate = creatDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

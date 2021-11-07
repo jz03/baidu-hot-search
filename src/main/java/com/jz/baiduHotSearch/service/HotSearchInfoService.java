@@ -1,5 +1,6 @@
 package com.jz.baiduHotSearch.service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -86,11 +87,16 @@ public class HotSearchInfoService {
     }
 
     public List<HotInfo> findHotInfoList(String query){
+        query = query.trim();
         List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
         return hotInfoList;
     }
 
     public List<Map<String, Object>> findHotInfoHistoryList(String query,String id){
+        query = query.trim();
+        if (StringUtils.isEmpty(query) && StringUtils.isEmpty(id)) {
+            return null;
+        }
         List<Map<String, Object>> hotInfoList = hotSearchInfoMapper.findHotInfoHistoryList(query,id);
         return hotInfoList;
     }

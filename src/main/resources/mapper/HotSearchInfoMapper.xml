@@ -37,7 +37,7 @@
         <if test="query != null and query != ''">
             and query like concat("%",#{query},"%")
         </if>
-        ORDER BY id DESC
+        ORDER BY id DESC limit 100
     </select>
 
     <select id="findHotInfoHistoryList" resultType="map">

@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class HotSearchInfoService {
      * 记录热搜信息
      */
     public void recordHotSearchInfo() throws IOException {
+        LOGGER.info("记录热搜信息-----------------");
         List<HotSearchInfo> hotSearchInfoList = this.getHotSearchInfo();
         //更新热点信息
         List<HotInfo> hotInfoList = hotSearchInfoList.stream().map(item -> {
@@ -87,12 +87,14 @@ public class HotSearchInfoService {
     }
 
     public List<HotInfo> findHotInfoList(String query){
+        LOGGER.info("查询热搜信息-----------------");
         query = query.trim();
         List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
         return hotInfoList;
     }
 
     public List<Map<String, Object>> findHotInfoHistoryList(String query,String id){
+        LOGGER.info("查询热搜信息历史-----------------");
         query = query.trim();
         if (StringUtils.isEmpty(query) && StringUtils.isEmpty(id)) {
             return null;

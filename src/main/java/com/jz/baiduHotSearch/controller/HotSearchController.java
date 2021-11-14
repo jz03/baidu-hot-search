@@ -52,7 +52,7 @@ public class HotSearchController {
      * @return
      */
     @RequestMapping("/findHotInfoHistoryList")
-    public List<Map<String,Object>> findHotInfoHistoryList(@RequestParam("query") String query,
+    public Map<String,Object> findHotInfoHistoryList(@RequestParam("query") String query,
                                                            @RequestParam("id") String id){
         LOGGER.info("开始查询信息历史-----------------");
         return hotSearchInfoService.findHotInfoHistoryList(query,id);

@@ -57,6 +57,6 @@
         <if test="id != null and id != ''">
             AND b.id = #{id}
         </if>
-        ORDER BY a.create_date DESC
+
     </select>
 </mapper>

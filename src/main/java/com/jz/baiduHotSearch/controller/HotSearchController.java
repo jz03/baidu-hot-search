@@ -21,12 +21,6 @@ public class HotSearchController {
     @Autowired
     private HotSearchInfoService hotSearchInfoService;
 
-    @RequestMapping("/test")
-    public String test(){
-        System.out.println("请求数据成功");
-        return "success";
-    }
-
     /**
      * 抓取热搜数据
      *

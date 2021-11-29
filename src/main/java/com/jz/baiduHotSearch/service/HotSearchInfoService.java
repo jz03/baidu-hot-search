@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,6 +37,7 @@ public class HotSearchInfoService {
      * 记录热搜信息
      */
     public void recordHotSearchInfo() throws IOException {
+        LOGGER.info("记录热搜信息-----------------");
         List<HotSearchInfo> hotSearchInfoList = this.getHotSearchInfo();
         //更新热点信息
         List<HotInfo> hotInfoList = hotSearchInfoList.stream().map(item -> {
@@ -86,19 +87,44 @@ public class HotSearchInfoService {
         }
     }
 
+    /***
+     * 查询热搜消息
+     *
+     * @param query
+     * @return
+     */
     public List<HotInfo> findHotInfoList(String query){
+        LOGGER.info("查询热搜信息-----------------");
         query = query.trim();
         List<HotInfo> hotInfoList = hotSearchInfoMapper.findHotInfoList(query);
         return hotInfoList;
     }
 
-    public List<Map<String, Object>> findHotInfoHistoryList(String query,String id){
+    /***
+     * 查询信息历史
+     *
+     * @param query
+     * @param id
+     * @return
+     */
+    public Map<String, Object> findHotInfoHistoryList(String query,String id){
+        LOGGER.info("查询热搜信息历史-----------------");
         query = query.trim();
         if (StringUtils.isEmpty(query) && StringUtils.isEmpty(id)) {
             return null;
         }
         List<Map<String, Object>> hotInfoList = hotSearchInfoMapper.findHotInfoHistoryList(query,id);
-        return hotInfoList;
+        //X时间轴的数据
+        List<Object> createDateList = hotInfoList.stream().map(item -> item.get("createDate")).collect(Collectors.toList());
+        //Y热搜指数的数据
+        List<Object> hotScoreList = hotInfoList.stream().map(item -> item.get("hotScore")).collect(Collectors.toList());
+        List<Object> indexList = hotInfoList.stream().map(item -> item.get("index")).collect(Collectors.toList());
+        Map resMap = new HashMap();
+        resMap.put("data",hotInfoList);
+        resMap.put("xData",createDateList);
+        resMap.put("yData",hotScoreList);
+        resMap.put("yIndexData",indexList);
+        return resMap;
     }
 
     /**

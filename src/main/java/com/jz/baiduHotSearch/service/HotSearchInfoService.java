@@ -17,12 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.util.Comparator.comparingLong;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toCollection;
 
 /**
  * 热搜service
@@ -88,6 +87,12 @@ public class HotSearchInfoService {
         }
     }
 
+    /***
+     * 查询热搜消息
+     *
+     * @param query
+     * @return
+     */
     public List<HotInfo> findHotInfoList(String query){
         LOGGER.info("查询热搜信息-----------------");
         query = query.trim();
@@ -95,6 +100,13 @@ public class HotSearchInfoService {
         return hotInfoList;
     }
 
+    /***
+     * 查询信息历史
+     *
+     * @param query
+     * @param id
+     * @return
+     */
     public Map<String, Object> findHotInfoHistoryList(String query,String id){
         LOGGER.info("查询热搜信息历史-----------------");
         query = query.trim();

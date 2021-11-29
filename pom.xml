@@ -62,7 +62,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-            <scope>true</scope>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -78,5 +78,11 @@
             </plugin>
         </plugins>
     </build>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>baidu-hot-search</name>
+            <url>https://maven.pkg.github.com/jz03/baidu-hot-search</url>
+        </repository>
+    </distributionManagement>
 </project>

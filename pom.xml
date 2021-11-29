@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jz</groupId>
-    <artifactId>baidu-hot-search</artifactId>
+    <artifactId>baidu-hot-search-schedule</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>baidu-hot-search</name>
-    <description>百度热搜</description>
+    <name>baidu-hot-search-schedule</name>
+    <description>百度热搜-定时任务</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -63,5 +63,11 @@
             </plugin>
         </plugins>
     </build>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>baidu-hot-search</name>
+            <url>https://maven.pkg.github.com/jz03/baidu-hot-search</url>
+        </repository>
+    </distributionManagement>
 </project>

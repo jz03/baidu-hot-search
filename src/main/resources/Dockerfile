@@ -1,4 +1,8 @@
 FROM java:8
-COPY *.jar /root/app.jar
-CMD ["java","-jar","/root/app.jar"]
+RUN mkdir /root/appconf
+RUN mkdir /root/appdata
+COPY start.sh /root/start.sh
+ENV TZ Asia/Shanghai
+WORKDIR /root
+CMD ["sh","start.sh"]
 EXPOSE 8080

@@ -1,0 +1,1 @@
+java -jar -Dspring.config.location=/root/appconf/application.yaml /root/appdata/*.jar

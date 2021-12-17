@@ -23,6 +23,7 @@ public class HotSearchController {
 
     /**
      * 抓取热搜数据
+     * 废弃备用
      *
      * @return
      * @throws IOException

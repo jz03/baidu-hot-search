@@ -1,16 +1,11 @@
 package com.jz.baiduHotSearch.service;
 
 import com.alibaba.druid.util.StringUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.jz.baiduHotSearch.common.BaiduHotInfo;
 import com.jz.baiduHotSearch.mapper.HotSearchInfoMapper;
 import com.jz.baiduHotSearch.pojo.HotBranch;
 import com.jz.baiduHotSearch.pojo.HotInfo;
 import com.jz.baiduHotSearch.pojo.HotSearchInfo;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +33,7 @@ public class HotSearchInfoService {
      */
     public void recordHotSearchInfo() throws IOException {
         LOGGER.info("记录热搜信息-----------------");
-        List<HotSearchInfo> hotSearchInfoList = this.getHotSearchInfo();
+        List<HotSearchInfo> hotSearchInfoList = BaiduHotInfo.getHotSearchInfo();
         //更新热点信息
         List<HotInfo> hotInfoList = hotSearchInfoList.stream().map(item -> {
             HotInfo hotInfoSearch = hotSearchInfoMapper.findHotInfo(item.getQuery());
@@ -128,29 +123,20 @@ public class HotSearchInfoService {
     }
 
     /**
-     * 获取百度热点信息
+     * 查询日期对应的数目
      * @return
-     * @throws IOException
      */
-    private List<HotSearchInfo> getHotSearchInfo() throws IOException {
-        //1.获取热搜页面
-        String url = "https://top.baidu.com/board?tab=realtime";
-        Document document = Jsoup.connect(url).get();
-        //2.获取返回结果信息
-        Elements select = document.select("#sanRoot");
-        String comment = select.comments().get(0).toString();
-        //3.结果信息转换为复合json的格式
-        String res = comment.replaceAll("<!--", "")
-                .replaceAll("-->", "")
-                .replaceAll("s-data:","");
-        //4.解析json字符串
-        JSONObject jsonObject = JSON.parseObject(res);
-        JSONArray cards = jsonObject.getJSONObject("data").getJSONArray("cards");
-        JSONObject cards01 = cards.getJSONObject(0);
-        JSONArray content = cards01.getJSONArray("content");
-        //5.将json对象转换为相应的对象
-        List<HotSearchInfo> hotSearchInfoList = JSONObject.parseArray(content.toJSONString(), HotSearchInfo.class);
-        LOGGER.info("当前热搜有"+hotSearchInfoList.size()+"条！");
-        return hotSearchInfoList;
+    public Map<String, Object> findHotCountDate(){
+        List<HashMap<String, Object>> mapperResList = hotSearchInfoMapper.findHotCountDate();
+        List<Object> dateList = mapperResList.stream().map(item -> item.get("cdate")).collect(Collectors.toList());
+        List<Object> numList = mapperResList.stream().map(item -> item.get("num")).collect(Collectors.toList());
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("xData",dateList);
+        resMap.put("yData",numList);
+        return resMap;
+    }
+
+    public List<HotInfo> findHotInfoListForDate(String date){
+        return hotSearchInfoMapper.findHotInfoListForDate(date);
     }
 }

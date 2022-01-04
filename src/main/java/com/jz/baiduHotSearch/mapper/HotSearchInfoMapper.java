@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,10 @@ public interface HotSearchInfoMapper {
 
     /**查询历史信息*/
     List<Map<String,Object>> findHotInfoHistoryList(@Param("query") String query,@Param("id") String id);
+
+    /**查询所有日期对应的消息数目*/
+    List<HashMap<String,Object>> findHotCountDate();
+
+    /**根据某一天的日期查询出当前的详细热搜信息*/
+    List<HotInfo> findHotInfoListForDate(String date);
 }

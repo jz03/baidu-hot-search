@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class HotSearchController {
 
     /**
      * 抓取热搜数据
-     * 废弃备用
      *
      * @return
      * @throws IOException
@@ -57,5 +57,24 @@ public class HotSearchController {
                                                            @RequestParam("id") String id){
         LOGGER.info("开始查询信息历史-----------------");
         return hotSearchInfoService.findHotInfoHistoryList(query,id);
+    }
+
+    /**
+     * 查询所有日期对应的个数
+     * @return
+     */
+    @RequestMapping("findHotCountDate")
+    public Map<String,Object> findHotCountDate(){
+        return hotSearchInfoService.findHotCountDate();
+    }
+
+    /**
+     * 某一天对应的热搜信息详情
+     * @param date
+     * @return
+     */
+    @RequestMapping("findHotInfoListForDate")
+    public List<HotInfo> findHotInfoListForDate(@RequestParam("date") String date){
+        return hotSearchInfoService.findHotInfoListForDate(date);
     }
 }

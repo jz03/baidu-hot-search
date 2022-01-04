@@ -58,13 +58,8 @@
         </div>
         <div  class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h2 class="sub-header">热搜信息查询</h2>
-          <form class="form-inline">
-            <div class="form-group">
-              <label for="query">查询关键词</label>
-              <input type="text" class="form-control" id="query" v-model="query" autocomplete="off" style="width: 500px;">
-            </div>
-            <button type="button" class="btn btn-default" @click="findHotInfoList">查询</button>
-          </form>
+          <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+          <div id="echartsMain" style="width: 1000px;height:500px;"></div>
           <hr>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -87,6 +82,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

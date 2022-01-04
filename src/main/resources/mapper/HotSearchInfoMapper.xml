@@ -59,4 +59,14 @@
         </if>
 
     </select>
+
+    <select id="findHotCountDate" resultType="hashmap">
+        select count(*) as num, DATE_FORMAT(create_date,'%Y-%m-%d') as cdate from hot_info
+        group by DATE_FORMAT(create_date,'%Y-%m-%d')
+    </select>
+
+    <select id="findHotInfoListForDate" resultType="com.jz.baiduHotSearch.pojo.HotInfo">
+        select * from hot_info where  DATE_FORMAT(create_date,'%Y-%m-%d') = #{date}
+        ORDER BY id
+    </select>
 </mapper>

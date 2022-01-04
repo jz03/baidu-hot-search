@@ -72,7 +72,9 @@ const Counter= {
             console.log("执行历史信息查询......");
             var res = httpReq(this.query,this.hotId);
             this.option.title.text = res.data[0].query;
+            //x轴的数据
             this.option.xAxis.data = res.xData;
+            //y轴的数据
             this.option.series[0].data =res.yData;
             this.option.series[1].data =res.yIndexData;
             myChart.setOption(this.option);

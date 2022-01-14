@@ -70,7 +70,7 @@ public class HotSearchController {
 
     /**
      * 某一天对应的热搜信息详情
-     * @param date
+     * @param date 2021-12-31
      * @return
      */
     @RequestMapping("findHotInfoListForDate")

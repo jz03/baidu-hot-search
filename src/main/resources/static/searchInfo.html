@@ -4,9 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+
     <title>百度热搜</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <link href="dashboard.css" rel="stylesheet">
 </head>
@@ -35,9 +38,9 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li ><a href="index.html">热搜信息 </a></li>
-                <li class="active"><a href="">热搜历史</a></li>
-                <li><a href="searchInfo.html">针对查询</a></li>
+                <li><a href="index.html">热搜信息 </a></li>
+                <li><a href="hotInfoHistory.html">热搜历史</a></li>
+                <li class="active"><a href="#">针对查询</a></li>
                 <li><a href="#">Export</a></li>
             </ul>
             <ul class="nav nav-sidebar">
@@ -54,31 +57,22 @@
             </ul>
         </div>
         <div  class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="sub-header">热搜历史查询</h2>
+            <h2 class="sub-header">热搜信息查询</h2>
             <form class="form-inline">
-                <div class="form-group">
-                    <label for="hotId">热搜信息ID</label>
-                    <input type="text" class="form-control" id="hotId" v-model="hotId" autocomplete="off">
-                </div>
                 <div class="form-group">
                     <label for="query">查询关键词</label>
                     <input type="text" class="form-control" id="query" v-model="query" autocomplete="off" style="width: 500px;">
                 </div>
-                &nbsp;&nbsp;
-                <button type="button" class="btn btn-default" @click="findHotInfoHistoryList">查询</button>
+                <button type="button" class="btn btn-default" @click="findHotInfoList">查询</button>
             </form>
-            <hr>
-            <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-            <div id="echartsMain" style="width: 1000px;height:500px;"></div>
             <hr>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>批次号</th>
-                        <th>排名</th>
-                        <th>热搜指数</th>
+                        <th>id</th>
                         <th>查询关键词</th>
+                        <th>详细描述</th>
                         <th>日期</th>
                     </tr>
                     </thead>
@@ -93,7 +87,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/vue@next"></script>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
-<script src="hotInfoHistory.js"></script>
+<script src="searchInfo.js"></script>
 </body>
 </html>
